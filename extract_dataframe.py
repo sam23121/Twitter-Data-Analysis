@@ -43,6 +43,8 @@ class TweetDfExtractor:
         return text
     
     def find_sentiments(self, text)->list:
+        polarity = [TextBlob(x).polarity  for x in text]
+        self.subjectivity = [TextBlob(x).subjectivity for x in text]
         
         return polarity, self.subjectivity
 
@@ -124,7 +126,7 @@ class TweetDfExtractor:
     
         
         
-    def get_tweet_df(self, save=False)->pd.DataFrame:
+    def get_tweet_df(self, save=True)->pd.DataFrame:
         """required column to be generated you should be creative and add more features"""
         
         columns = ['created_at', 'source', 'original_text','polarity','subjectivity', 'favorite_count', 'retweet_count', 
