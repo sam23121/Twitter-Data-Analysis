@@ -47,7 +47,7 @@ class Clean_Tweets:
         df["polarity"] = pd.to_numeric(df["polarity"])
         df["subjectivity"] = pd.to_numeric(df["subjectivity"])
         df["retweet_count"] = pd.to_numeric(df["retweet_count"])
-        df["favorite_count"] = pd.to_numeric(df["favorite_count"])
+        # df["favorite_count"] = pd.to_numeric(df["favorite_count"])
         df["friends_count "] = pd.to_numeric(df["friends_count"])
         
         return df
@@ -60,3 +60,14 @@ class Clean_Tweets:
         df = df.drop(df[df['lang'] != 'en'].index)
         
         return df
+
+if __name__ == "__main__":
+    df = pd.read_csv("processed_tweet_data.csv")
+    clean_tweets = Clean_Tweets(df=df)
+    df = clean_tweets.drop_unwanted_column(df)
+    df = clean_tweets.convert_to_numbers(df)
+    df = clean_tweets.convert_to_datetime(df)
+    df = clean_tweets.drop_duplicate(df)
+    df = clean_tweets.remove_non_english_tweets(df)
+    df.to_csv('clean_processed_tweet_data.csv')
+    print('File Successfully Saved.!!!')

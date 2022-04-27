@@ -125,6 +125,16 @@ class TweetDfExtractor:
         
         return location
 
+    def find_lang(self)->list:
+        lang = []
+        for i in self.tweets_list:
+            try:
+                lang.append(i['user']['lang'])
+            except TypeError:
+                lang.append(None)
+        
+        return lang
+
     
         
         
@@ -132,7 +142,7 @@ class TweetDfExtractor:
         """required column to be generated you should be creative and add more features"""
         
         columns = ['created_at', 'source', 'original_text','polarity','subjectivity', 'favorite_count', 'retweet_count', 
-            'original_author', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'location']
+            'lang','original_author', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'location']
         # columns = ['text','polarity','subjectivity', 'created_at', 'source', 'screen_name', 'followers_count','friends_count',
         # 'possibly_sensitive','favorite_count', 'retweet_count',]
         created_at = self.find_created_time()
@@ -141,6 +151,7 @@ class TweetDfExtractor:
         polarity, subjectivity = self.find_sentiments(text)
         fav_count = self.find_favourite_count()
         retweet_count = self.find_retweet_count()
+        lang = self.find_lang()
         screen_name = self.find_screen_name()
         follower_count = self.find_followers_count()
         friends_count = self.find_friends_count()
@@ -148,7 +159,7 @@ class TweetDfExtractor:
         hashtags = self.find_hashtags()
         mentions = self.find_mentions()
         location = self.find_location()
-        data = zip(created_at, source, text, polarity, subjectivity, fav_count, retweet_count, screen_name, follower_count, friends_count, sensitivity, hashtags, mentions, location)
+        data = zip(created_at, source, text, polarity, subjectivity, fav_count, retweet_count, lang, screen_name, follower_count, friends_count, sensitivity, hashtags, mentions, location)
        # data = zip(text, polarity,subjectivity, created_at,source, screen_name, follower_count, friends_count,fav_count, retweet_count, sensitivity)
         df = pd.DataFrame(data=data, columns=columns)
 
@@ -161,8 +172,8 @@ class TweetDfExtractor:
                 
 if __name__ == "__main__":
     """  required column to be generated you should be creative and add more features """
-    columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'favorite_count', 'retweet_count', 'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'location', 'place_coord_boundaries']
-    # columns = ['text', 'polarity','subjectivity', 'created_at', 'source','favorite_count', 'retweet_count', 'screen_name', 'followers_count','friends_count','possibly_sensitive', ]
+    columns = ['created_at', 'source', 'original_text','polarity','subjectivity', 'favorite_count', 'retweet_count', 
+            'lang','original_author', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'location']    # columns = ['text', 'polarity','subjectivity', 'created_at', 'source','favorite_count', 'retweet_count', 'screen_name', 'followers_count','friends_count','possibly_sensitive', ]
     _, tweet_list = read_json(r"C:\Users\sam\Desktop\test\data\Economic_Twitter_Data\Economic_Twitter_Data.json")
     tweet = TweetDfExtractor(tweet_list)
     tweet_df = tweet.get_tweet_df() 
