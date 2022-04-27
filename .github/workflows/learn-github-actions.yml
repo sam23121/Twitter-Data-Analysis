@@ -1,0 +1,9 @@
+name: learn-github-actions
+on: [push]
+
+jobs:
+  bulid:
+
+    runs-on: ubuntu-latest
+
+    run: python -m unittest tests.test_extract_dataframe

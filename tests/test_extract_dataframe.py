@@ -4,6 +4,7 @@ import sys, os
  
 sys.path.append(os.path.abspath(os.path.join('../..')))
 
+
 from extract_dataframe import read_json
 from extract_dataframe import TweetDfExtractor
 
@@ -63,7 +64,7 @@ class TestTweetDfExtractor(unittest.TestCase):
         self.assertEqual(self.df.find_followers_count(), f_count)
 
     def test_find_friends_count(self):
-        friends_count = [3, 3, 3, 3, 3]
+        friends_count = [12, 12, 12, 12, 12]
         self.assertEqual(self.df.find_friends_count(), friends_count)
 
     def test_find_is_sensitive(self):
@@ -73,16 +74,13 @@ class TestTweetDfExtractor(unittest.TestCase):
         self.assertEqual(self.df.find_favourite_count(), [2356, 1985, 16, 1242, 1329])
 
     def test_find_retweet_count(self):
-        self.assertEqual(self.df.find_retweet_count(), [None, None, None, None, None])
+        self.assertEqual(self.df.find_retweet_count(), [355, 505, 4, 332, 386])
 
     def test_find_hashtags(self):
         self.assertEqual(self.df.find_hashtags(), [[], [], [], [{'text': 'Deutschen', 'indices': [16, 26]}, {'text': 'Spritpreisen', 'indices': [54, 67]}, {'text': 'inflation', 'indices': [95, 105]}, {'text': 'Abgaben', 'indices': [130, 138]}], []])
 
     # def test_find_mentions(self):
-    #     self.assertEqual(self.df.find_mentions(), [{'screen_name': 'nikitheblogger', 'name': 'Neverforgetniki', 'id': 809188392089092097, 'id_str': '809188392089092097', 'indices': [3, 18]}], 
-    #     [{'screen_name': 'sagt_mit', 'name': 'Sie sagt es mit Bildern', 'id': 1511959918777184256, 'id_str': '1511959918777184256', 'indices': [3, 12]}],
-    #     [{'screen_name': 'Kryptonoun', 'name': 'Kryptoguru', 'id': 951051508321345536, 'id_str': '951051508321345536', 'indices': [3, 14]}, {'screen_name': 'WRi007', 'name': 'Wolfgang Berger', 'id': 1214543251283357696, 'id_str': '1214543251283357696', 'indices': [16, 23]}],        [{'screen_name': 'WRi007', 'name': 'Wolfgang Berger', 'id': 1214543251283357696, 'id_str': '1214543251283357696', 'indices': [3, 10]}],
-    #     [{'screen_name': 'RolandTichy', 'name': 'Roland Tichy', 'id': 19962363, 'id_str': '19962363', 'indices': [3, 15]}])
+    #     self.assertEqual(self.df.find_mentions(), [{'screen_name': 'nikitheblogger', 'name': 'Neverforgetniki', 'id': 809188392089092097, 'id_str': '809188392089092097', 'indices': [3, 18]}])
 
     def test_find_location(self):
         self.assertEqual(self.df.find_location(), ['', '', '', '', ''])
