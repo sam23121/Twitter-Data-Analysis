@@ -5,5 +5,6 @@ jobs:
   bulid:
 
     runs-on: ubuntu-latest
+    steps:
 
-    run: python -m unittest tests.test_extract_dataframe
+      - run: python -m unittest tests/test_extract_dataframe
